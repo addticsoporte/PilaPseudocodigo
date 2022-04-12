@@ -1,0 +1,111 @@
+Algoritmo PilaenPseudocodigo
+	//Declaración de variables
+	Definir pila como entero; // se define el tipo de dato que va a tener el arreglo que contendrá la pila. 
+	Definir max como entero; //  contiene el valor del tamaño máximo de la pila. 
+	Definir tope como entero; //contiene la posición superior actual de la pila. 
+	Definir seleccion como entero; //Contiene la opción que el usuario seleccionó 
+	Definir dato como entero; //el valor del dato del tipo entero a guardar en las posiciones del arreglo de la pila
+	Definir band como logico; //band actua como bandera lógica
+	
+	tope = 0;	//se inicializa la posición superior de la pila como si estuviera vacía  
+	band = Falso;
+	max = 11; //se define el tamaño máximo de la pila. 
+	dato = 0; //se inicializa el valor de dato.
+	Dimension pila[max];
+	
+	Repetir //Es equivalente al "do" del Do-While
+		Escribir "Seleccione que quiere hacer con la estructura pila (Tope =  ",tope, ")";
+		Escribir "1 = Saber si la pila está vacía";
+		Escribir "2  = Saber si la pila está llena";
+		Escribir "3 = Colocar un elemento a la pila";
+		Escribir "4 = Quitar un elemento a la pila";
+		Escribir "5 = Mostrar los elementos actuales de la pila";
+		Escribir "Cualquier otro número = Salir";
+		Leer seleccion; //lee la opcion que quiere hacer el usuario 
+		Segun seleccion Hacer //Esta es la condicional conocida como Switch
+			1:
+				band = pilaVacia(pila,tope);  //Se quiere saber si la pila se encuentra vacía y se devuelve un valor booleano - verdadero o falso -- 
+				Si (band=Verdadero) Entonces
+					
+					Escribir "La pila está vacía";
+				Sino 
+					Escribir "La pila no está vacía";
+				FinSi
+			2:
+				band = pilaLlena(pila,tope,max);  //Se quiere saber si la pila se encuentra llena y se devuelve un valor booleano - verdadero o falso -- 
+				Si (band=Verdadero) Entonces
+					Escribir "La pila está llena";
+				Sino 
+					Escribir "La pila no está llena";
+				FinSi
+			3:
+				tope = poner(pila,tope,max,dato); //En todo momento, se necesita conocer la posición actual de la pila, para poder orientar los valores en el arreglo "pila". 
+				
+			4: 
+				tope = quitar(pila, tope,max); //En todo momento, se necesita conocer la posición actual de la pila, para poder orientar los valores en el arreglo "pila". 
+			5: 
+				mostrarElementos(pila); //Esto imprime los elementos que se encuentran en las posiciones de la pila.
+			De Otro Modo: //equivalente al "default" 
+				Escribir "Hasta luego";
+		Fin Segun
+		//Escribir "Seleccion = ", seleccion;
+		Escribir "                                         ";
+		Hasta Que(seleccion <> 1 y seleccion <> 2 y seleccion <> 3 y seleccion <> 4 y seleccion <> 5) //similar al "while" del Do-While.
+FinAlgoritmo
+
+Funcion band <- pilaVacia(pila,tope) //En PSEINT esta es la forma en la que se retorna una variable - poniendole una flecha a la izquierda, la variable aquí es "band".
+	Si(tope=0) Entonces //si el valor del tope se mantiene en la posicion cero, quiere decir que la pila no tiene valores y se regresa en la variable "band" un valor 
+		//booleano que indica si la pila está vacía o no.
+		
+		band <- Verdadero //la pila está vacía
+		
+	Sino
+		band <- Falso; //la pila no está vacía	
+	FinSi
+FinFuncion
+
+Funcion band <- pilaLlena(pila,tope,max)  
+	Si(tope=max) Entonces //si el valor del tope ha llegado a su posición máxima superior, quiere decir que la pila ya se ha llenado y retorna a "band" un valor verdadero.   		
+		band <- Verdadero; //la pila está llena
+	Sino //y Sino , pues entonces...
+		band <- falso; //la pila no está llena
+	FinSi
+FinFuncion
+
+Funcion tope <- poner(pila,tope,max,dato) //esta función retorna la posición actual del tope - que es en donde esta ahora, se han ido agregando valores- en esta función va incrementándose. 
+	band = pilaLlena(pila,tope,max); //se tiene que saber si la pila se encuentra llena o no. 
+	Si(band=Verdadero) Entonces //si la pila esta llena 
+		Escribir "Desbordamiento - Pila llena";
+	Sino //si la pila no se encuentra llena , entonces se pueden agregar datos en esa pila todavía. 		
+		Escribir Sin Saltar "Coloque dato NUMÉRICO a insertar "; Leer dato; //se pide el numero entero a colocar y se lee el dato. 
+		pila[tope] = dato; //Se inserta el numero entero en la posición que marca el tope - que es en donde esta ahora, se han ido agregando valores - de la pila. 
+		tope <- tope + 1; //se va incrementando, apilando el arreglo "pila". 		
+	FinSi
+FinFuncion
+
+Funcion tope <- quitar(pila, tope,max) //esta función retorna la posición actual del tope - que es en donde esta ahora, se han ido agregando valores- en esta función va incrementándose. 
+	band = pilaVacia(pila,tope); //para saber si la pila está vacía, y el resultado nos lo muestra la variable "band". 
+	Si(band=Verdadero) Entonces //si ya la pila está vacía. 
+		Escribir "Subdesbordamiento - Pila vacía";
+	Sino
+		tope <- tope-1; //se decrementa el tope - que es la posición última que solía tener un valor en la pila - de está desapilando. 
+		pila[tope] = 0; //se quita el valor guardado en la posición actual donde esta el tope de la pila. 
+	FinSi
+	
+FinFuncion
+
+Funcion mostrarElementos(pila)
+	Escribir "La pila tiene los siguientes elementos actualmente: ";
+	Escribir "Posición 11: ", pila[10];
+	Escribir "Posición 10: ", pila[9];
+	Escribir "Posición 9: ", pila[8];
+	Escribir "Posición 8: ", pila[7];
+	Escribir "Posición 7: ", pila[6];
+	Escribir "Posición 6: ", pila[5];
+	Escribir "Posición 5: ", pila[4];
+	Escribir "Posición 4: ", pila[3];
+	Escribir "Posición 3: ", pila[2];
+	Escribir "Posición 2: ", pila[1];
+	Escribir "Posición 1: ", pila[0]; //siempre un arreglo se empieza de cero. 
+	
+FinFuncion
